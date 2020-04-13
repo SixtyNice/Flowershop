@@ -10,13 +10,9 @@ import javax.persistence.Table;
 public class FlowerEntity {
 
     @Id
-    @Column(name = "NAME", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
-
-    @Column(name = "PRICE")
     private int price;
-
-    @Column(name = "AMOUNT")
     private int amount;
 
     protected FlowerEntity() {
