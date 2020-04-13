@@ -10,7 +10,7 @@ import java.util.UUID;
 public class UserEntity {
 
     @Id
-    @Column(name = "ID", unique = true, nullable = false)
+    @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
@@ -18,29 +18,32 @@ public class UserEntity {
     )
     private UUID id;
 
-    @Column(name = "LOGIN", unique = true, nullable = false)
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
+    @Column(unique = true, nullable = false)
     private String login;
 
-    @Column(name = "PASSWORD", nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "LAST_NAME", nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "MIDDLE_NAME")
+    @Column(name = "middle_name")
     private String middleName;
 
-    @Column(name = "ADDRESS", nullable = false)
+    @Column(nullable = false)
     private String address;
 
-    @Column(name = "BALANCE", nullable = false)
-    private int balance;
+    @Column(nullable = false)
+    private Integer balance;
 
-    @Column(name = "DISCOUNT", nullable = false)
-    private int discount;
+    @Column(nullable = false)
+    private Integer discount;
 
     protected UserEntity() {
     }
@@ -52,7 +55,6 @@ public class UserEntity {
         this.lastName = lastName;
         this.middleName = middleName;
         this.address = address;
-
     }
 
     @Override
@@ -63,6 +65,16 @@ public class UserEntity {
 
     }
 
+    public void setCart(Cart cart) {
+        if (cart == null) {
+            if (this.cart != null) {
+                this.cart.setUser(null);
+            }
+        } else {
+            cart.setUser(this);
+        }
+        this.cart = cart;
+    }
 
     public UUID getId() {
         return id;
