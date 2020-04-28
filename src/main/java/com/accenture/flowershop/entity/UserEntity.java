@@ -3,6 +3,8 @@ package com.accenture.flowershop.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,8 +20,11 @@ public class UserEntity {
     )
     private UUID id;
 
-    @OneToOne(mappedBy = "user")
-    private Cart cart;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CartEntity> cart;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<OrderEntity> order;
 
     @Column(unique = true, nullable = false)
     private String login;
@@ -40,41 +45,49 @@ public class UserEntity {
     private String address;
 
     @Column(nullable = false)
-    private Integer balance;
+    private BigDecimal balance;
 
     @Column(nullable = false)
-    private Integer discount;
+    private Double discount = 0.0;
 
     protected UserEntity() {
     }
 
 
-    public UserEntity(String login, String name, String lastName, String middleName, String address) {
+    public UserEntity(String login, String name, String lastName, String middleName, String address, Double discount) {
         this.login = login;
         this.name = name;
         this.lastName = lastName;
         this.middleName = middleName;
         this.address = address;
+        this.discount = discount;
     }
 
     @Override
     public String toString() {
-        return "Login " + this.login + " Name: " + this.name + " Last Name: "
-                + this.lastName + " Middle Name: " + this.middleName
-                + " Address: " + this.address;
-
+        return "UserEntity{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", address='" + address + '\'' +
+                ", balance=" + balance +
+                ", discount=" + discount +
+                '}';
     }
 
-    public void setCart(Cart cart) {
-        if (cart == null) {
-            if (this.cart != null) {
-                this.cart.setUser(null);
-            }
-        } else {
-            cart.setUser(this);
-        }
-        this.cart = cart;
-    }
+    //    public void setCart(CartEntity cart) {
+//        if (cart == null) {
+//            if (this.cart != null) {
+//                this.cart.setUser(null);
+//            }
+//        } else {
+//            cart.setUser(List<this>);
+//        }
+//        this.cart = cart;
+//    }
 
     public UUID getId() {
         return id;
@@ -132,19 +145,19 @@ public class UserEntity {
         this.address = address;
     }
 
-    public int getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
-    public int getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 }

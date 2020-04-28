@@ -1,42 +1,59 @@
 package com.accenture.flowershop.entity;
 
 import javax.persistence.*;
-import java.util.UUID;
+import java.util.Set;
 
 @Entity
 @Table(name = "CART")
-public class Cart {
+public class CartEntity {
 
     @Id
     @Column(nullable = false, unique = true)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(name = "amount")
     private Integer amount;
 
-    @Column(name = "flower_name")
-    private String flowerName;
+//    @ManyToMany
+//    @JoinTable(name = "CartFlowers",
+//            joinColumns = {@JoinColumn(name = "Flower_ID")},
+//            inverseJoinColumns = {@JoinColumn(name = "Cart_ID")})
+//    @JoinColumn(name = "flower")
+//    private Set<FlowerEntity> flowerId;
 
 
-    @OneToOne()
-    @JoinColumn(name = "user_id")
-    @MapsId
-    UserEntity user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
+    @ManyToOne
+    @JoinColumn(name = "flower_id", nullable = false)
+    private FlowerEntity flower;
 
-    protected Cart() {
+    protected CartEntity() {
 
     }
 
-    public Cart(String flowerName) {
-        this.flowerName = flowerName;
+    public CartEntity(Integer amount, FlowerEntity flower, UserEntity user) {
+        this.user = user;
+        this.amount = amount;
+        this.flower = flower;
     }
 
-    public UUID getId() {
+    public FlowerEntity getFlower() {
+        return flower;
+    }
+
+    public void setFlower(FlowerEntity flower) {
+        this.flower = flower;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,11 +73,13 @@ public class Cart {
         this.user = user;
     }
 
-    public String getFlowerName() {
-        return flowerName;
-    }
-
-    public void setFlowerName(String flowerName) {
-        this.flowerName = flowerName;
+    @Override
+    public String toString() {
+        return "CartEntity{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", user=" + user.getLogin() +
+                ", flower=" + flower.getName() +
+                '}';
     }
 }
