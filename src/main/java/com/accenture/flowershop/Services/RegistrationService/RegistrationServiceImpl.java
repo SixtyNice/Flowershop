@@ -1,9 +1,11 @@
-package com.accenture.flowershop.Model.RegistrationService;
+package com.accenture.flowershop.Services.RegistrationService;
 
 import com.accenture.flowershop.DAO.UserDAO;
 import com.accenture.flowershop.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
@@ -15,7 +17,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (checkExistLogin(user.getLogin())) {
             return false;
         }
-        user.setBalance(2000);
+        user.setBalance(new BigDecimal(2000));
         userDAO.save(user);
         return true;
     }

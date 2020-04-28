@@ -1,4 +1,4 @@
-package com.accenture.flowershop.Model.RegistrationService;
+package com.accenture.flowershop.Services.RegistrationService;
 
 import com.accenture.flowershop.entity.UserEntity;
 

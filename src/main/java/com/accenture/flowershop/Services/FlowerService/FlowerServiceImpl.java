@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class FlowerService {
+public class FlowerServiceImpl implements FlowerService {
 
     @Autowired
     FlowerDAO flowerDAO;
@@ -30,10 +30,6 @@ public class FlowerService {
             return new ArrayList<>();
         }
 
-    }
-
-    public boolean getAmountOfFlower(List<FlowerEntity> flowerListAmount) {
-        
     }
 
 }
