@@ -1,4 +1,4 @@
-package com.accenture.flowershop.Model.FlowerService;
+package com.accenture.flowershop.Services.FlowerService;
 
 import com.accenture.flowershop.DAO.FlowerDAO;
 import com.accenture.flowershop.entity.FlowerEntity;
@@ -30,6 +30,10 @@ public class FlowerService {
             return new ArrayList<>();
         }
 
+    }
+
+    public boolean getAmountOfFlower(List<FlowerEntity> flowerListAmount) {
+        
     }
 
 }

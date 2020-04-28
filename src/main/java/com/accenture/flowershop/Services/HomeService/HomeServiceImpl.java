@@ -1,4 +1,4 @@
-package com.accenture.flowershop.Model.HomeService;
+package com.accenture.flowershop.Services.HomeService;
 
 import com.accenture.flowershop.DAO.UserDAO;
 import com.accenture.flowershop.entity.UserEntity;

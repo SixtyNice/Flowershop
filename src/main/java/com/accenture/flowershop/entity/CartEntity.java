@@ -1,39 +1,51 @@
 package com.accenture.flowershop.entity;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "CART")
 public class Cart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(nullable = false, unique = true)
+    private UUID id;
 
     @Column(name = "amount")
-    Integer amount;
+    private Integer amount;
 
     @Column(name = "flower_name")
-    String flowerName;
+    private String flowerName;
 
 
     @OneToOne()
     @JoinColumn(name = "user_id")
+    @MapsId
     UserEntity user;
 
+
     protected Cart() {
+
     }
 
     public Cart(String flowerName) {
         this.flowerName = flowerName;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     public UserEntity getUser() {

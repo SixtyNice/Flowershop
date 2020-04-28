@@ -1,4 +1,4 @@
-package com.accenture.flowershop.Model.OrderService;
+package com.accenture.flowershop.Services.OrderService;
 
 import com.accenture.flowershop.entity.FlowerEntity;
 import org.springframework.stereotype.Service;
