@@ -1,6 +1,6 @@
 package com.accenture.flowershop.Controller;
 
-import com.accenture.flowershop.Model.LoginService.LoginService;
+import com.accenture.flowershop.Services.LoginService.LoginServiceImpl;
 import com.accenture.flowershop.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     @Autowired
-    LoginService loginService;
+    LoginServiceImpl loginService;
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     public UserEntity login(@RequestBody UserEntity user) {

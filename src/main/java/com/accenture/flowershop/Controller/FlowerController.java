@@ -1,7 +1,7 @@
 package com.accenture.flowershop.Controller;
 
 
-import com.accenture.flowershop.Model.FlowerService.FlowerService;
+import com.accenture.flowershop.Services.FlowerService.FlowerServiceImpl;
 import com.accenture.flowershop.entity.FlowerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.util.List;
 public class FlowerController {
 
     @Autowired
-    FlowerService flowerService;
+    FlowerServiceImpl flowerService;
 
     @GetMapping(path = "/list", produces = "application/json")
     public List<FlowerEntity> getAllFlowers() {
