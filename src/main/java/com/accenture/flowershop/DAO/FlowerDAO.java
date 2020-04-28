@@ -3,10 +3,12 @@ package com.accenture.flowershop.DAO;
 import com.accenture.flowershop.entity.FlowerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface FlowerDAO extends JpaRepository<FlowerEntity, String> {
+@Repository
+public interface FlowerDAO extends JpaRepository<FlowerEntity, Long> {
 
     FlowerEntity findFlowerByName(String name);
 
