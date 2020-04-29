@@ -10,7 +10,7 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     UserDAO userDAO;
 
-    public UserEntity validate(String login, String password) {
+    public UserEntity login(String login, String password) {
         UserEntity user = userDAO.findUserByLogin(login);
         if (user != null) {
             if (user.getPassword().equals(password)) {
