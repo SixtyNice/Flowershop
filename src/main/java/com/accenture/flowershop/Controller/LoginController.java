@@ -14,7 +14,7 @@ public class LoginController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     public UserEntity login(@RequestBody UserEntity user) {
-        return loginService.validate(user.getLogin(), user.getPassword());
+        return loginService.login(user.getLogin(), user.getPassword());
     }
 
 
