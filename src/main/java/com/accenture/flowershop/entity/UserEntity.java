@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -50,17 +51,17 @@ public class UserEntity {
     @Column(nullable = false)
     private Double discount = 0.0;
 
+
     protected UserEntity() {
     }
 
 
-    public UserEntity(String login, String name, String lastName, String middleName, String address, Double discount) {
+    public UserEntity(String login, String name, String lastName, String middleName, String address) {
         this.login = login;
         this.name = name;
         this.lastName = lastName;
         this.middleName = middleName;
         this.address = address;
-        this.discount = discount;
     }
 
     @Override
@@ -76,6 +77,19 @@ public class UserEntity {
                 ", balance=" + balance +
                 ", discount=" + discount +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     //    public void setCart(CartEntity cart) {

@@ -3,27 +3,33 @@ package com.accenture.flowershop.Controller;
 import com.accenture.flowershop.Services.RegistrationService.RegistrationServiceImpl;
 import com.accenture.flowershop.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/registration")
+@RequestMapping("/register")
 public class RegistrationController {
 
     @Autowired
     RegistrationServiceImpl registrationService;
 
-    @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
-    public Map<String, Boolean> createUser(@RequestBody UserEntity user) {
-        Map<String, Boolean> response = new HashMap<>();
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user,
+                                                 HttpServletRequest request) {
 
-        response.put("response", registrationService.createUser(user));
-        return response;
+        UserEntity userEntity = registrationService.createUser(user, request);
+        if (userEntity != null) {
+            return new ResponseEntity<>(userEntity, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
 }

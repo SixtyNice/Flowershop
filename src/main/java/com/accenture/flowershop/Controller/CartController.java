@@ -15,7 +15,7 @@ public class CartController {
     @Autowired
     CartServiceImpl cartService;
 
-    @GetMapping(produces = "application/json", consumes = "application/json")
+    @GetMapping(produces = "application/json")
     public List<CartEntity> getCart(@PathVariable(value = "login") String login) {
         return cartService.getCart(login);
     }

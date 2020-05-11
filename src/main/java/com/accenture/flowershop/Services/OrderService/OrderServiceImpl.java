@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 import static java.lang.System.out;
 
@@ -30,13 +31,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void createOrder(String login) {
+    public OrderEntity createOrder(String login) {
         try {
             UserEntity user = userDAO.findUserByLogin(login);
             List<CartEntity> userCart = cartDAO.findByUserId(user.getId());
-            Random rnd = new Random(new Date().getTime());
-            long orderId = Math.abs(rnd.nextLong());
-
+            long orderId = new Date().getTime();
             out.println("Order Id: " + orderId);
             for (CartEntity cart : userCart) {
                 BigDecimal priceOfFlower = cart.getFlower().getPrice();
@@ -52,12 +51,15 @@ public class OrderServiceImpl implements OrderService {
                 order.setOrderId(orderId);
                 order.setPrice(totalPrice);
                 orderDAO.save(order);
+                cartDAO.clearCart(user.getId());
+                return order;
             }
-            cartDAO.clearCart(user.getId());
+
         } catch (Exception e) {
             e.printStackTrace();
-        }
 
+        }
+        return null;
     }
 
     @Override
@@ -71,15 +73,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Map<String, Object> payOrder(String login, long orderId) {
-        Map<String, Object> response = new TreeMap<>();
+    public List<OrderEntity> payOrder(String login, long orderId) {
+
         List<OrderEntity> order = orderDAO.findByOrderId(orderId);
 
         UserEntity user = userDAO.findUserByLogin(login);
         BigDecimal userBalance = user.getBalance();
         BigDecimal totalPrice = new BigDecimal(0);
-
-        boolean paid = false;
 
         for (OrderEntity orderItem : order) {
             totalPrice = totalPrice.add(orderItem.getPrice());
@@ -90,16 +90,20 @@ public class OrderServiceImpl implements OrderService {
             BigDecimal userBalanceAfterPay = userBalance.subtract(totalPrice);
             user.setBalance(userBalanceAfterPay);
             order.forEach(orderEntity -> orderEntity.setStatus("paid"));
-            paid = true;
-            response.put("balance", userBalanceAfterPay);
+            order.forEach(orderEntity ->
+                    orderEntity.getFlower()
+                            .setAmount(
+                                    orderEntity.getFlower().getAmount() - orderEntity.getAmount()));
+            return order;
         }
-        response.put("paid", paid);
-        return response;
+
+        return null;
     }
 
 
     @Override
-    public List<OrderEntity> getOrders(String login) {
-        return null;
+    public List<OrderEntity> getUserOrder(String login) {
+        return orderDAO.findByUserLogin(login);
     }
+
 }
