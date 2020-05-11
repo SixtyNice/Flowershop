@@ -1,0 +1,17 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+.container-inner{
+    width: 50%;
+    margin: 0 auto;
+}

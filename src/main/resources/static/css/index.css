@@ -1,0 +1,18 @@
+.href-container {
+    width: 100%;
+    font-size: 1.2rem;
+    
+}
+
+.index-href {
+    display: block;
+    border: 2px solid gray;
+    width: 150px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.reghref{
+    margin-top: 10px;
+}
