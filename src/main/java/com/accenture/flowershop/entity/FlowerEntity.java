@@ -1,9 +1,8 @@
 package com.accenture.flowershop.entity;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,11 +17,12 @@ public class FlowerEntity {
     private BigDecimal price;
     private Integer amount;
 
-    @OneToMany(mappedBy = "flower", cascade = CascadeType.ALL)
-    private List<CartEntity> cart;
 
-    @OneToMany(mappedBy = "flower", cascade = CascadeType.ALL)
-    private List<OrderEntity> order;
+//    @ManyToOne
+//    private List<CartEntity> cart = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "flower", cascade = CascadeType.ALL)
+//    private List<OrderEntity> order;
 
     protected FlowerEntity() {
     }
@@ -58,12 +58,12 @@ public class FlowerEntity {
         this.id = id;
     }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
     public Integer getAmount() {
         return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     @Override

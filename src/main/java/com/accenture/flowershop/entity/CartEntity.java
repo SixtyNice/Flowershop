@@ -1,6 +1,9 @@
 package com.accenture.flowershop.entity;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,40 +15,48 @@ public class CartEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "amount")
-    private Integer amount;
+//    @Column(name = "amount")
+//    private Integer amount;
 
-//    @ManyToMany
-//    @JoinTable(name = "CartFlowers",
-//            joinColumns = {@JoinColumn(name = "Flower_ID")},
-//            inverseJoinColumns = {@JoinColumn(name = "Cart_ID")})
-//    @JoinColumn(name = "flower")
-//    private Set<FlowerEntity> flowerId;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "CartFlowers",
+            joinColumns = {@JoinColumn(name = "Cart_ID")},
+            inverseJoinColumns = {@JoinColumn(name = " Flower_ID")})
+    @JoinColumn(name = "flower")
+    @ElementCollection
+    private Set<FlowerEntity> flower;
 
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    @ManyToOne
-    @JoinColumn(name = "flower_id", nullable = false)
-    private FlowerEntity flower;
+//    @OneToMany
+//    @JoinColumn(name = "flower_id")
+//    private List<FlowerEntity> flower = new ArrayList<>();
+
 
     protected CartEntity() {
 
     }
 
-    public CartEntity(Integer amount, FlowerEntity flower, UserEntity user) {
-        this.user = user;
-        this.amount = amount;
+//    public CartEntity(Integer amount, Set<FlowerEntity> flower, UserEntity user) {
+//        this.user = user;
+//        this.amount = amount;
+//        this.flower = flower;
+//    }
+
+    public CartEntity(Set<FlowerEntity> flower, UserEntity user) {
         this.flower = flower;
+        this.user = user;
     }
 
-    public FlowerEntity getFlower() {
+    public Set<FlowerEntity> getFlower() {
         return flower;
     }
 
-    public void setFlower(FlowerEntity flower) {
+    public void setFlower(Set<FlowerEntity> flower) {
         this.flower = flower;
     }
 
@@ -55,14 +66,6 @@ public class CartEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
     }
 
     public UserEntity getUser() {
@@ -77,9 +80,7 @@ public class CartEntity {
     public String toString() {
         return "CartEntity{" +
                 "id=" + id +
-                ", amount=" + amount +
                 ", user=" + user.getLogin() +
-                ", flower=" + flower.getName() +
                 '}';
     }
 }

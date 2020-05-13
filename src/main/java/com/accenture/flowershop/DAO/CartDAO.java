@@ -15,11 +15,11 @@ public interface CartDAO extends JpaRepository<CartEntity, UserEntity> {
 
     @Modifying
     @Query(value = "DELETE FROM CART WHERE flower_name=?1 and user_id=?2", nativeQuery = true)
-    void deleteFlowerFromCart(String flowerName, UUID userId);
+    void deleteFlowerFromCart(String flowerName, Long userId);
 
     @Modifying
     @Query(value = "DELETE FROM CART WHERE user_id=?1", nativeQuery = true)
-    void clearCart(UUID userId);
+    void clearCart(Long userId);
 
-    List<CartEntity> findByUserId(UUID userId);
+    CartEntity findByUserId(Long userId);
 }

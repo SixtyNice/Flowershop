@@ -37,7 +37,7 @@ insert into USERS(ID, LOGIN, PASSWORD, NAME, LAST_NAME, MIDDLE_NAME, ADDRESS, BA
 values (00000000-0000-0000-0000-000000000000, 'admin', 'admin123', 'Dima', 'Skibin', 'Norman', 'NO', 0, 0);
 --create user
 insert into USERS(ID, LOGIN, PASSWORD, NAME, LAST_NAME, MIDDLE_NAME, ADDRESS, BALANCE, DISCOUNT)
-values (00000000-0000-0000-0000-000000000001, 'dima', 'dima', 'dima', 'dima', 'Norman', 'NO', 10000, 10);
+values (1, 'dima', 'dima', 'dima', 'dima', 'Norman', 'NO', 10000, 10);
 
 ----create my admin
 --insert into USERS(ID, LOGIN, PASSWORD, NAME, LAST_NAME, MIDDLE_NAME, ADDRESS, BALANCE, DISCOUNT)

@@ -21,7 +21,7 @@ public class AdminFilter implements Filter {
         if (loggedIn) {
             filterChain.doFilter(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + "/login");
+            response.sendRedirect(request.getContextPath() + "/login.html");
 
         }
     }

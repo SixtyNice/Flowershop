@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("{login}/cart")
@@ -16,12 +17,12 @@ public class CartController {
     CartServiceImpl cartService;
 
     @GetMapping(produces = "application/json")
-    public List<CartEntity> getCart(@PathVariable(value = "login") String login) {
+    public CartEntity getCart(@PathVariable(value = "login") String login) {
         return cartService.getCart(login);
     }
 
     @PostMapping(path = "/addToCart", produces = "application/json", consumes = "application/json")
-    public String addToCart(@PathVariable(value = "login") String login, @RequestBody FlowerEntity flower) {
+    public String addToCart(@PathVariable(value = "login") String login, @RequestBody Set<FlowerEntity> flower) {
         return cartService.addToCart(login, flower);
     }
 

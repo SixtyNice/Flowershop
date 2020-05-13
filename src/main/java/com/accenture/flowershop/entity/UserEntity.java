@@ -14,18 +14,19 @@ public class UserEntity {
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    private UUID id;
+//    @GeneratedValue(generator = "UUID")
+//    @GenericGenerator(
+//            name = "UUID",
+//            strategy = "org.hibernate.id.UUIDGenerator"
+//    )
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CartEntity> cart;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<OrderEntity> order;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<OrderEntity> order;
 
     @Column(unique = true, nullable = false)
     private String login;
@@ -103,11 +104,11 @@ public class UserEntity {
 //        this.cart = cart;
 //    }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

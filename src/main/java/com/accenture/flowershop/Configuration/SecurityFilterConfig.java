@@ -7,8 +7,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Configuration
 public class SecurityFilterConfig {
 
@@ -16,7 +14,9 @@ public class SecurityFilterConfig {
     public FilterRegistrationBean<UserFilter> homeFilter() {
         FilterRegistrationBean<UserFilter> UserFilterBean = new FilterRegistrationBean<>();
         UserFilterBean.setFilter(new UserFilter());
-        UserFilterBean.addUrlPatterns("/home/*");
+//        UserFilterBean.addUrlPatterns("/home/*");
+        UserFilterBean.addUrlPatterns("/{filename:\\w+}/cart/*");
+//        UserFilterBean.addUrlPatterns("/\\blogin\\b/cart/*");
         return UserFilterBean;
     }
 

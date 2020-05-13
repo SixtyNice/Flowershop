@@ -1,8 +1,12 @@
 package com.accenture.flowershop.entity;
 
+import com.accenture.flowershop.Enum.OrderStatus;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "ORDERS")
@@ -14,7 +18,9 @@ public class OrderEntity {
     private Long orderId;
     private Date dateCreate;
     private Date dateClose;
-    private String status = "created";
+    @Enumerated(EnumType.STRING)
+    @Column
+    private OrderStatus status = OrderStatus.CREATED;
     private Integer amount;
     private BigDecimal price;
 
@@ -22,13 +28,17 @@ public class OrderEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    @ManyToOne
-    @JoinColumn(name = "flower_id", nullable = false)
-    private FlowerEntity flower;
+    @ManyToMany
+    @JoinTable(name = "OrderFLowers",
+            joinColumns = {@JoinColumn(name = "Order_ID")},
+            inverseJoinColumns = {@JoinColumn(name = " Flower_ID")})
+    @JoinColumn(name = "flower")
+    private Set<FlowerEntity> flower;
+
 
 
     public OrderEntity(CartEntity cart) {
-        this.amount = cart.getAmount();
+//        this.amount = cart.getAmount();
         this.user = cart.getUser();
         this.flower = cart.getFlower();
         dateCreate = new Date();
@@ -69,11 +79,11 @@ public class OrderEntity {
         this.dateClose = dateClose;
     }
 
-    public String getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
@@ -93,11 +103,11 @@ public class OrderEntity {
         this.user = user;
     }
 
-    public FlowerEntity getFlower() {
+    public Set<FlowerEntity> getFlower() {
         return flower;
     }
 
-    public void setFlower(FlowerEntity flower) {
+    public void setFlower(Set<FlowerEntity> flower) {
         this.flower = flower;
     }
 
