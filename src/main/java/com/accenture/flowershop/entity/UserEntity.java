@@ -52,6 +52,7 @@ public class UserEntity {
     private Double discount = 0.0;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role = Role.USER;
 
 
