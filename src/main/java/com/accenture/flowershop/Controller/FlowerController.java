@@ -26,7 +26,7 @@ public class FlowerController {
         return flowerService.getAllFlowers();
     }
 
-    @GetMapping(path = "/getflowerbyname/{name}", produces = "application/json")
+    @GetMapping(path = "/getFlowerByName/", produces = "application/json")
     public ResponseEntity<FlowerEntity> getFlowerByName(@RequestBody FlowerFilter flowerFilter) {
         FlowerEntity flowerEntity = flowerService.getFlowerByName(flowerFilter);
         if (flowerEntity != null) {
