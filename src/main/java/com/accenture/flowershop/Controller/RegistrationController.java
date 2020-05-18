@@ -17,18 +17,17 @@ import javax.servlet.http.HttpServletRequest;
 public class RegistrationController {
 
     @Autowired
-    RegistrationServiceImpl registrationService;
+    private RegistrationServiceImpl registrationService;
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user,
-                                                 HttpServletRequest request) {
+    public ResponseEntity<Boolean> createUser(@RequestBody UserEntity user,
+                                              HttpServletRequest request) {
 
-        UserEntity userEntity = registrationService.createUser(user, request);
-        if (userEntity != null) {
-            return new ResponseEntity<>(userEntity, HttpStatus.OK);
+        boolean userEntity = registrationService.createUser(user, request);
+        if (userEntity) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
-
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 

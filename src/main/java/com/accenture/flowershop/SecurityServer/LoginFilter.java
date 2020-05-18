@@ -1,5 +1,6 @@
 package com.accenture.flowershop.SecurityServer;
 
+import com.accenture.flowershop.Enum.Role;
 import com.accenture.flowershop.entity.UserEntity;
 
 import javax.servlet.*;
@@ -20,7 +21,7 @@ public class LoginFilter implements Filter {
         if (session.getAttribute("User") != null) {
             response.sendRedirect(request.getContextPath() + "/home/" + user.getLogin());
             filterChain.doFilter(servletRequest, servletResponse);
-        } else if (session.getAttribute("Admin") != null) {
+        } else if (session.getAttribute("role").equals(Role.ADMIN)) {
             response.sendRedirect(request.getContextPath() + "/" + user.getLogin());
             filterChain.doFilter(servletRequest, servletResponse);
         }

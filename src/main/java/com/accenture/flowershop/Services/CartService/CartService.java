@@ -1,19 +1,17 @@
 package com.accenture.flowershop.Services.CartService;
 
+import com.accenture.flowershop.DTO.CartDTO;
 import com.accenture.flowershop.entity.CartEntity;
 import com.accenture.flowershop.entity.FlowerEntity;
 
-import java.util.List;
-import java.util.Set;
-
 public interface CartService {
 
-    String addToCart(String login, Set<FlowerEntity> flower);
+    String addToCart(long userId, FlowerEntity flower);
 
-    void deleteFromCart(String login,FlowerEntity flower);
+    boolean deleteFromCart(long id);
 
-    void clearCart(String login);
+    boolean clearCart(long id);
 
-    CartEntity getCart(String login);
+    CartDTO getCart(long userId);
 
 }

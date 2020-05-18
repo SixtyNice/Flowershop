@@ -5,5 +5,5 @@ import com.accenture.flowershop.entity.UserEntity;
 import javax.servlet.http.HttpServletRequest;
 
 public interface LoginService {
-    UserEntity login(String login, String password, HttpServletRequest request);
+    boolean login(long userId, String password, HttpServletRequest request);
 }

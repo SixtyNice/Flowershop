@@ -18,22 +18,21 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @Autowired
-    LoginServiceImpl loginService;
+    private LoginServiceImpl loginService;
 
 
     @PostMapping(produces = "application/json", consumes = "application/json")
-    public ResponseEntity<UserEntity> login(@RequestBody UserEntity user,
-                                            HttpServletRequest request,
-                                            HttpServletResponse response) {
-        UserEntity userEntity = loginService.login(user.getLogin(), user.getPassword(), request);
+    public ResponseEntity<Boolean> login(@RequestBody UserEntity user,
+                                         HttpServletRequest request,
+                                         HttpServletResponse response) {
+        boolean userEntity = loginService.login(user.getId(), user.getPassword(), request);
 
-        if (userEntity != null) {
+        if (userEntity) {
 
-            return new ResponseEntity<>(userEntity, HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
     }
-
 
 }

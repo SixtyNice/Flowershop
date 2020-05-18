@@ -1,7 +1,7 @@
 package com.accenture.flowershop.Controller;
 
+import com.accenture.flowershop.DTO.UserDTO;
 import com.accenture.flowershop.Services.HomeService.HomeServiceImpl;
-import com.accenture.flowershop.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 public class HomeController {
 
     @Autowired
-    HomeServiceImpl homeService;
+    private HomeServiceImpl homeService;
 
-    @GetMapping(path = "/{login}", produces = "application/json")
-    public UserEntity getUser(@PathVariable(value = "login") String login,
-                              HttpServletRequest request) {
-        return homeService.getUser(login, request);
+    @GetMapping(path = "/{userId}", produces = "application/json")
+    public UserDTO getUser(@PathVariable(value = "userId") long userId,
+                           HttpServletRequest request) {
+        return homeService.getUser(userId, request);
     }
 
 }

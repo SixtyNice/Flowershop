@@ -2,6 +2,7 @@ package com.accenture.flowershop.Services.FlowerService;
 
 import com.accenture.flowershop.DAO.FlowerDAO;
 import com.accenture.flowershop.entity.FlowerEntity;
+import com.accenture.flowershop.entity.FlowerFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,18 +13,18 @@ import java.util.List;
 public class FlowerServiceImpl implements FlowerService {
 
     @Autowired
-    FlowerDAO flowerDAO;
+    private FlowerDAO flowerDAO;
 
     public List<FlowerEntity> getAllFlowers() {
         return flowerDAO.findAll();
     }
 
-    public FlowerEntity getFlowerByName(String name) {
-        return flowerDAO.findFlowerByName(name);
+    public FlowerEntity getFlowerByName(FlowerFilter flowerFilter) {
+        return flowerDAO.findFlowerByName(flowerFilter.getName());
     }
 
-    public List<FlowerEntity> getFlowersByPrice(int priceFrom, int priceTo) {
-        List<FlowerEntity> flowers = flowerDAO.findFlowersByPriceRange(priceFrom, priceTo);
+    public List<FlowerEntity> getFlowersByPrice(FlowerFilter flowerFilter) {
+        List<FlowerEntity> flowers = flowerDAO.findFlowersByPriceRange(flowerFilter.getFromPrice(), flowerFilter.getToPrice());
         if (flowers.size() > 0) {
             return flowers;
         } else {

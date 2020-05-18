@@ -1,40 +1,59 @@
 package com.accenture.flowershop.Controller;
 
+import com.accenture.flowershop.DTO.CartDTO;
 import com.accenture.flowershop.Services.CartService.CartServiceImpl;
-import com.accenture.flowershop.entity.CartEntity;
 import com.accenture.flowershop.entity.FlowerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Set;
-
 @RestController
-@RequestMapping("{login}/cart")
+@RequestMapping("{userId}/cart")
 public class CartController {
 
     @Autowired
-    CartServiceImpl cartService;
+    private CartServiceImpl cartService;
 
     @GetMapping(produces = "application/json")
-    public CartEntity getCart(@PathVariable(value = "login") String login) {
-        return cartService.getCart(login);
+    public ResponseEntity<CartDTO> getCart(@PathVariable(value = "userId") long userId) {
+        CartDTO cart = cartService.getCart(userId);
+        if (cart == null) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(cart, HttpStatus.OK);
+        }
     }
 
     @PostMapping(path = "/addToCart", produces = "application/json", consumes = "application/json")
-    public String addToCart(@PathVariable(value = "login") String login, @RequestBody Set<FlowerEntity> flower) {
-        return cartService.addToCart(login, flower);
+    public ResponseEntity<String> addToCart(@PathVariable(value = "userId") Long userId, @RequestBody FlowerEntity flower) {
+        String response = cartService.addToCart(userId, flower);
+        if (response.equalsIgnoreCase("ok")) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else if (response.equalsIgnoreCase("No such flower")) {
+            return new ResponseEntity<>("No such flower", HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>("No such user", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @PostMapping(path = "/deleteFromCart", produces = "application/json", consumes = "application/json")
-    public void deleteFromCart(@PathVariable(value = "login") String login, @RequestBody FlowerEntity flower) {
-        cartService.deleteFromCart(login, flower);
-
+    @DeleteMapping(path = "/deleteFromCart", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Boolean> deleteFromCart(@RequestParam(name = "flowerId") long cartFlowerId) {
+        boolean response = cartService.deleteFromCart(cartFlowerId);
+        if (response) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping(path = "/clearCart", produces = "application/json", consumes = "application/json")
-    public void clearCart(@PathVariable(value = "login") String login) {
-        cartService.clearCart(login);
+    public ResponseEntity<Boolean> clearCart(@RequestParam(name = "flowerId") long cartFlowerId) {
+        boolean response = cartService.clearCart(cartFlowerId);
+        if (response) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
     }
-
 }

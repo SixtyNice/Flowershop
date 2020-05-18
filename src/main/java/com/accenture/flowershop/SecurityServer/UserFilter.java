@@ -1,14 +1,12 @@
 package com.accenture.flowershop.SecurityServer;
 
+import com.accenture.flowershop.Enum.Role;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class UserFilter implements Filter {
 
@@ -24,9 +22,9 @@ public class UserFilter implements Filter {
         HttpSession session = request.getSession(false);
 
         boolean loggedIn = (session != null && session.getAttribute("User") != null);
-        boolean loggedInAdmin = (session != null && session.getAttribute("Admin") != null);
+        boolean loggedInAdmin = (session != null && session.getAttribute("role").equals(Role.ADMIN));
 
-        if (loggedIn || loggedInAdmin ) {
+        if (loggedIn || loggedInAdmin) {
 
             filterChain.doFilter(request, response);
 

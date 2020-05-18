@@ -1,41 +1,32 @@
-package com.accenture.flowershop.entity;
+package com.accenture.flowershop.DTO;
 
 import com.accenture.flowershop.Enum.OrderStatus;
+import com.accenture.flowershop.entity.JoinOrderFlowersEntity;
+import com.accenture.flowershop.entity.OrderEntity;
+import com.accenture.flowershop.entity.UserEntity;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-@Entity
-@Table(name = "ORDERS")
-public class OrderEntity implements Serializable {
+public class OrderDTO {
 
-    @Id
-    @Column(nullable = false, unique = true)
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Date dateCreate = new Date();
+    private Date dateCreate;
     private Date dateClose;
-    @Enumerated(EnumType.STRING)
-    @Column
+
     private OrderStatus status = OrderStatus.CREATED;
     private BigDecimal price;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
-
-    @ElementCollection
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<JoinOrderFlowersEntity> orderUserFlowers;
 
-    public OrderEntity(UserEntity user) {
-        this.user = user;
-    }
-
-    protected OrderEntity() {
+    public OrderDTO(OrderEntity orderEntity) {
+        this.id = orderEntity.getId();
+        this.dateCreate = orderEntity.getDateCreate();
+        this.dateClose = orderEntity.getDateClose();
+        this.status = orderEntity.getStatus();
+        this.price = orderEntity.getPrice();
+        this.orderUserFlowers = orderEntity.getOrderUserFlowers();
     }
 
     public Long getId() {
@@ -70,14 +61,6 @@ public class OrderEntity implements Serializable {
         this.status = status;
     }
 
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
@@ -93,12 +76,6 @@ public class OrderEntity implements Serializable {
     public void setOrderUserFlowers(Set<JoinOrderFlowersEntity> orderUserFlowers) {
         this.orderUserFlowers = orderUserFlowers;
     }
+
+
 }
-
-
-//    @ManyToMany
-//    @JoinTable(name = "Order_FLowers",
-//            joinColumns = {@JoinColumn(name = "Order_ID")},
-//            inverseJoinColumns = {@JoinColumn(name = " Flower_ID")})
-//    @JoinColumn(name = "flower")
-//    private List<FlowerEntity> flower;

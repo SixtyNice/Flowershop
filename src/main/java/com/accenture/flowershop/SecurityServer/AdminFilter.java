@@ -1,5 +1,7 @@
 package com.accenture.flowershop.SecurityServer;
 
+import com.accenture.flowershop.Enum.Role;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +18,7 @@ public class AdminFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
 
-        boolean loggedIn = (session != null && session.getAttribute("Admin") != null);
+        boolean loggedIn = (session != null && session.getAttribute("role").equals(Role.ADMIN));
 
         if (loggedIn) {
             filterChain.doFilter(request, response);

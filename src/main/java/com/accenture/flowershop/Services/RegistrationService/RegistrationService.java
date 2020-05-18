@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface RegistrationService {
 
-    UserEntity createUser(UserEntity user, HttpServletRequest request);
-    boolean checkExistLogin(String login);
+    boolean createUser(UserEntity user, HttpServletRequest request);
+    boolean checkExistLogin(long login);
 
 }

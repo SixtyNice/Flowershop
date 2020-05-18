@@ -1,12 +1,11 @@
 package com.accenture.flowershop.entity;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.accenture.flowershop.Enum.Role;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "USERS")
@@ -22,7 +21,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<CartEntity> cart;
 
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -51,6 +50,9 @@ public class UserEntity {
 
     @Column(nullable = false)
     private Double discount = 0.0;
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
 
 
     protected UserEntity() {
@@ -174,5 +176,13 @@ public class UserEntity {
 
     public void setDiscount(Double discount) {
         this.discount = discount;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

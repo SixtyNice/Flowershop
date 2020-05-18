@@ -12,8 +12,8 @@ public class LogoutServiceImpl implements LogoutService {
         HttpSession session = request.getSession(false);
         if (session.getAttribute("User") != null) {
             session.removeAttribute("User");
-        } else if (session.getAttribute("Admin") != null) {
-            session.removeAttribute("Admin");
+        } else if (session.getAttribute("role") != null) {
+            session.removeAttribute("role");
         }
 
     }

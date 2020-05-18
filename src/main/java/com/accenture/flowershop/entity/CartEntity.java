@@ -1,9 +1,6 @@
 package com.accenture.flowershop.entity;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,49 +12,32 @@ public class CartEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-//    @Column(name = "amount")
-//    private Integer amount;
 
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "CartFlowers",
-            joinColumns = {@JoinColumn(name = "Cart_ID")},
-            inverseJoinColumns = {@JoinColumn(name = " Flower_ID")})
-    @JoinColumn(name = "flower")
     @ElementCollection
-    private Set<FlowerEntity> flower;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<JoinCartFlowersEntity> cartUserFlowers;
 
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-//    @OneToMany
-//    @JoinColumn(name = "flower_id")
-//    private List<FlowerEntity> flower = new ArrayList<>();
-
 
     protected CartEntity() {
 
     }
 
-//    public CartEntity(Integer amount, Set<FlowerEntity> flower, UserEntity user) {
-//        this.user = user;
-//        this.amount = amount;
-//        this.flower = flower;
-//    }
+    public CartEntity(UserEntity user) {
 
-    public CartEntity(Set<FlowerEntity> flower, UserEntity user) {
-        this.flower = flower;
         this.user = user;
     }
 
-    public Set<FlowerEntity> getFlower() {
-        return flower;
+    public Set<JoinCartFlowersEntity> getCartUserFlowers() {
+        return cartUserFlowers;
     }
 
-    public void setFlower(Set<FlowerEntity> flower) {
-        this.flower = flower;
+    public void setCartUserFlowers(Set<JoinCartFlowersEntity> cartUserFlowers) {
+        this.cartUserFlowers = cartUserFlowers;
     }
 
     public Long getId() {
@@ -76,6 +56,7 @@ public class CartEntity {
         this.user = user;
     }
 
+
     @Override
     public String toString() {
         return "CartEntity{" +
@@ -84,3 +65,30 @@ public class CartEntity {
                 '}';
     }
 }
+
+//    @JoinTable(name = "CartFlowers",
+//
+//            inverseJoinColumns = {@JoinColumn(name = "Flower_ID")}
+//    )
+
+//    @ElementCollection
+//    @ManyToMany()
+//    @JoinTable(name = "Cart_Flowers",
+//            joinColumns = {@JoinColumn(name = "Cart_ID")},
+//            inverseJoinColumns = {@JoinColumn(name = "Flower_ID")})
+//    private Set<FlowerEntity> flower;
+//    @ElementCollection
+
+//    @ElementCollection
+//    @ManyToMany(cascade = CascadeType.REMOVE)
+//    @JoinTable(name = "Cart_User_Flowers",
+//            joinColumns = {@JoinColumn(name = "Cart_ID")},
+//            inverseJoinColumns = {@JoinColumn(name = "Cart_Flower_ID")})
+//    private Set<CartFlower> CartFlower;
+
+//    @OneToMany
+//    @JoinColumn(name = "flower_id")
+//    private List<FlowerEntity> flower = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "cart")
+//    private Set<CartFlowersEntity> flowersCart;
