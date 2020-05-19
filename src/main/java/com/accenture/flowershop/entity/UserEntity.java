@@ -96,17 +96,6 @@ public class UserEntity {
         return Objects.hash(id);
     }
 
-    //    public void setCart(CartEntity cart) {
-//        if (cart == null) {
-//            if (this.cart != null) {
-//                this.cart.setUser(null);
-//            }
-//        } else {
-//            cart.setUser(List<this>);
-//        }
-//        this.cart = cart;
-//    }
-
     public Long getId() {
         return id;
     }
