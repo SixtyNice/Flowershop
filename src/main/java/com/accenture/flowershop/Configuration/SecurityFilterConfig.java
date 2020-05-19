@@ -14,9 +14,7 @@ public class SecurityFilterConfig {
     public FilterRegistrationBean<UserFilter> homeFilter() {
         FilterRegistrationBean<UserFilter> UserFilterBean = new FilterRegistrationBean<>();
         UserFilterBean.setFilter(new UserFilter());
-//        UserFilterBean.addUrlPatterns("/home/*");
-        UserFilterBean.addUrlPatterns("/{filename:\\w+}/cart/*");
-//        UserFilterBean.addUrlPatterns("/\\blogin\\b/cart/*");
+        UserFilterBean.addUrlPatterns("/home/*");
         return UserFilterBean;
     }
 
