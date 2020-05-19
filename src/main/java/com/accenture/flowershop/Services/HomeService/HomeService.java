@@ -7,6 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface HomeService {
 
-    UserDTO getUser(long login, HttpServletRequest request);
+    UserDTO getUser(long userId, HttpServletRequest request);
 
 }
