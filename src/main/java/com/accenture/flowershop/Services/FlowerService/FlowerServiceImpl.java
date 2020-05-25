@@ -33,4 +33,14 @@ public class FlowerServiceImpl implements FlowerService {
 
     }
 
+    @Override
+    public void increaseFlowersStockSize(int count) {
+        List<FlowerEntity> flowers = getAllFlowers();
+        flowers.forEach(flower -> {
+                    flower.setAmount(flower.getAmount() + count);
+                    flowerDAO.save(flower);
+                }
+        );
+    }
+
 }

@@ -3,56 +3,64 @@ package com.accenture.flowershop.entity;
 import com.accenture.flowershop.Enum.Role;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "USERS")
+@XmlRootElement(name = "user")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class UserEntity {
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
-//    @GeneratedValue(generator = "UUID")
-//    @GenericGenerator(
-//            name = "UUID",
-//            strategy = "org.hibernate.id.UUIDGenerator"
-//    )
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @XmlElement(name = "idUser")
     private Long id;
 
     @OneToMany(mappedBy = "user")
     private List<CartEntity> cart;
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<OrderEntity> order;
-
     @Column(unique = true, nullable = false)
+    @XmlElement(name = "login")
     private String login;
 
     @Column(nullable = false)
+    @XmlElement(name = "password")
     private String password;
 
     @Column(nullable = false)
+    @XmlElement(name = "name")
     private String name;
 
     @Column(name = "last_name", nullable = false)
+    @XmlElement(name = "lastName")
     private String lastName;
 
     @Column(name = "middle_name")
+    @XmlElement(name = "middleName")
     private String middleName;
 
     @Column(nullable = false)
+    @XmlElement(name = "address")
     private String address;
 
     @Column(nullable = false)
+    @XmlElement(name = "balance")
     private BigDecimal balance;
 
     @Column(nullable = false)
+    @XmlElement(name = "discount")
     private Double discount = 0.0;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @XmlElement(name = "role")
     private Role role = Role.USER;
 
 

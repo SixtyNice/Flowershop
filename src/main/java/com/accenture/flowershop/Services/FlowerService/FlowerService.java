@@ -12,4 +12,6 @@ public interface FlowerService {
 
     List<FlowerEntity> getFlowersByPrice(FlowerFilter flowerFilter);
 
+    void increaseFlowersStockSize(int count);
+
 }
